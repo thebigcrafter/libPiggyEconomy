@@ -4,19 +4,20 @@ on: [push, pull_request]
 
 jobs:
   phpstan:
+    name: Run PHPStan at maximum level
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26
         with:
           ref: ${{ github.ref }}
-      - name: Create Vendor Directory
+      - name: Create vendor directory
         run: mkdir vendor
-      - name: Download Plugin Dependencies
+      - name: Download provider PHAR dependencies
         run: |
           wget -O vendor/BedrockEconomy.phar https://poggit.pmmp.io/r/230746/BedrockEconomy.phar
           wget -O vendor/EconomyAPI.phar https://poggit.pmmp.io/r/153507/EconomyAPI.phar
           wget -O vendor/SimpleEconomy.phar https://poggit.pmmp.io/r/262879/SimpleEconomy.phar
-      - name: Run PHPStan
-        uses: paroxity/pmmp-phpstan-action@5.12.0
+      - name: Run PHPStan analysis
+        uses: paroxity/pmmp-phpstan-action@744eb59126237a485c759c44516026232f0aa852
         with:
           phpstan-config: phpstan.neon.dist

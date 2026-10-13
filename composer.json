@@ -1,5 +1,7 @@
 {
   "name": "dapigguy/libpiggyeconomy",
+  "description": "Virion library for supporting multiple economy providers in PocketMine-MP plugins.",
+  "license": "Apache-2.0",
   "repositories": [
     {
       "type": "vcs",
