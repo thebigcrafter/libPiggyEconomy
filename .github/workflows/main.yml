@@ -1,6 +1,9 @@
 name: Analyze PHP code with PHPStan
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   phpstan:
