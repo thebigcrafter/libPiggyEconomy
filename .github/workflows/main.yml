@@ -13,14 +13,18 @@ jobs:
       - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26
         with:
           ref: ${{ github.ref }}
-      - name: Create vendor directory
-        run: mkdir vendor
+      - name: Set up PHP for Axolotl-PM
+        uses: pmmp/setup-php-action@3c38c259834f945351a662392836d90eb08abff0
+        with:
+          php-version: 8.2
+          install-path: ${{ github.workspace }}/bin
+          pm-version-major: 5
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
       - name: Download provider PHAR dependencies
         run: |
           wget -O vendor/BedrockEconomy.phar https://poggit.pmmp.io/r/230746/BedrockEconomy.phar
           wget -O vendor/EconomyAPI.phar https://poggit.pmmp.io/r/153507/EconomyAPI.phar
           wget -O vendor/SimpleEconomy.phar https://poggit.pmmp.io/r/262879/SimpleEconomy.phar
       - name: Run PHPStan analysis
-        uses: paroxity/pmmp-phpstan-action@744eb59126237a485c759c44516026232f0aa852
-        with:
-          phpstan-config: phpstan.neon.dist
+        run: vendor/bin/phpstan analyse --configuration=phpstan.neon.dist --no-progress

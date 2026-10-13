@@ -35,6 +35,7 @@ class libPiggyEconomy
     }
 
     /**
+     * @phpstan-param list<string> $providerNames
      * @phpstan-param class-string<EconomyProvider> $economyProvider
      */
     public static function registerProvider(array $providerNames, string $economyProvider): void
@@ -46,6 +47,7 @@ class libPiggyEconomy
     }
 
     /**
+     * @phpstan-param array{provider: string} $providerInformation
      * @throws UnknownProviderException
      * @throws MissingProviderDependencyException
      */
@@ -80,7 +82,7 @@ class libPiggyEconomy
      * factory before the virion is packaged; silently resolving an undeclared
      * class would make the resulting PHAR depend on development-only code.
      *
-     * @param array<string, mixed> $providerInformation
+     * @param array{provider: string} $providerInformation
      * @throws UnknownProviderException
      */
     private static function createProvider(string $provider, array $providerInformation): EconomyProvider
