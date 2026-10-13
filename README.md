@@ -2,6 +2,13 @@
 
 libPiggyEconomy is a virion for easy support of multiple economy providers.
 
+This thebigcrafter-maintained fork keeps the upstream provider API and adds an
+explicit standalone factory for its built-in providers. The factory is needed
+by the thebigcrafter DevTools build boundary so a packaged plugin does not
+retain an unprovable dynamic class instantiation. A provider added by an
+extension must be represented in that factory before producing a standalone
+PHAR; no undeclared provider code is implicitly bundled.
+
 ## Supported Providers
 
 - [EconomyAPI](https://poggit.pmmp.io/p/EconomyAPI) by onebone/poggit-orphanage

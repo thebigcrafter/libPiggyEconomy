@@ -55,9 +55,44 @@ class libPiggyEconomy
             throw new UnknownProviderException("Provider " . $providerInformation["provider"] . " not found.");
         }
         $provider = self::$economyProviders[strtolower($providerInformation["provider"])];
-        if (!$provider::checkDependencies()) {
+        if (!self::providerDependenciesAvailable($provider)) {
             throw new MissingProviderDependencyException("Dependencies for provider " . $providerInformation["provider"] . " not found.");
         }
-        return new $provider($providerInformation);
+        return self::createProvider($provider, $providerInformation);
+    }
+
+    private static function providerDependenciesAvailable(string $provider): bool
+    {
+        return match ($provider) {
+            EconomySProvider::class => EconomySProvider::checkDependencies(),
+            BedrockEconomyProvider::class => BedrockEconomyProvider::checkDependencies(),
+            SimpleEconomyProvider::class => SimpleEconomyProvider::checkDependencies(),
+            XPProvider::class => XPProvider::checkDependencies(),
+            default => false,
+        };
+    }
+
+    /**
+     * Create one of the providers shipped by this virion without a dynamic
+     * class instantiation. This keeps standalone Virion shading deterministic.
+     *
+     * Providers registered by an extension must be added to this explicit
+     * factory before the virion is packaged; silently resolving an undeclared
+     * class would make the resulting PHAR depend on development-only code.
+     *
+     * @param array<string, mixed> $providerInformation
+     * @throws UnknownProviderException
+     */
+    private static function createProvider(string $provider, array $providerInformation): EconomyProvider
+    {
+        return match ($provider) {
+            EconomySProvider::class => new EconomySProvider(),
+            BedrockEconomyProvider::class => new BedrockEconomyProvider(),
+            SimpleEconomyProvider::class => new SimpleEconomyProvider(),
+            XPProvider::class => new XPProvider(),
+            default => throw new UnknownProviderException(
+                "Provider {$providerInformation['provider']} is not included in the standalone provider factory.",
+            ),
+        };
     }
 }
