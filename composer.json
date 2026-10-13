@@ -1,7 +1,14 @@
 {
   "name": "dapigguy/libpiggyeconomy",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/axolotl-pm/PocketMine-MP",
+      "no-api": true
+    }
+  ],
   "require": {
-    "pocketmine/pocketmine-mp": "^5.0.0"
+    "axolotl-pm/pocketmine-mp": "5.49.1"
   },
   "autoload": {
     "classmap": ["src"]
