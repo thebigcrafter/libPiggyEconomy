@@ -14,7 +14,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
       - name: Set up PHP for Axolotl-PM
-        uses: pmmp/setup-php-action@e031917a35223b96cba12fe19ace0765c91f6bfb
+        uses: pmmp/setup-php-action@3c38c259834f945351a662392836d90eb08abff0
         with:
           php-version: 8.2
           install-path: ${{ github.workspace }}/bin
