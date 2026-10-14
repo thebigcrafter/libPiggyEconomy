@@ -14,23 +14,34 @@ PHAR; no undeclared provider code is implicitly bundled.
 
 - [EconomyAPI](https://poggit.pmmp.io/p/EconomyAPI) by onebone/poggit-orphanage
 - [BedrockEconomy](https://poggit.pmmp.io/p/BedrockEconomy) by cooldogedev
+- SimpleEconomy
 - Experience (PMMP)
 
 ## Usage
 
 ### Setup
 
+Import the library class and initialize the built-in provider registry before
+requesting a provider:
+
 ```php
-libPiggyEconomy::init()
+use DaPigGuy\libPiggyEconomy\libPiggyEconomy;
+
+libPiggyEconomy::init();
 ```
 
 ### Using Economy Providers
 
 ```php
-libPiggyEconomy::getProvider($providerInformation)
+use DaPigGuy\libPiggyEconomy\libPiggyEconomy;
+
+libPiggyEconomy::getProvider($providerInformation);
 ```
 
-`$providerInformation` is an array with the key ```provider```.
+`$providerInformation` is an array with a `provider` key. Provider names are
+matched case-insensitively. For providers that rely on another plugin, that
+plugin must be installed and enabled on the server; otherwise
+`MissingProviderDependencyException` is thrown.
 
 #### Economy Provider Methods
 
@@ -61,6 +72,8 @@ economy:
 AmazingPlugin.php
 
 ```php
+use DaPigGuy\libPiggyEconomy\libPiggyEconomy;
+
 class AmazingPlugin extends PluginBase{
     public $economyProvider;
     
