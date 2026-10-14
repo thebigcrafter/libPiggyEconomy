@@ -10,6 +10,15 @@ instantiation. A provider added by an
 extension must be represented in that factory before producing a standalone
 PHAR; no undeclared provider code is implicitly bundled.
 
+## Recommendation for new plugins
+
+For new NhanAZ plugins, prefer [EcoAPI](https://github.com/NhanAZ-Libraries/EcoAPI)
+as the common economy integration layer. EcoAPI provides a maintained callback-
+based interface for SimpleEconomy, BedrockEconomy, EconomyAPI and XP, and is the
+recommended default for new integrations. Keep libPiggyEconomy when maintaining
+an existing plugin or compatibility contract that already depends on its API;
+there is no need to migrate every consumer at once.
+
 ## Supported Providers
 
 - [EconomyAPI](https://poggit.pmmp.io/p/EconomyAPI) by onebone/poggit-orphanage
